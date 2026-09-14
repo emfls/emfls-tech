@@ -262,3 +262,7 @@
 - Repository readiness는 `COMPLETE`다.
 - Production deployment와 custom domain은 `LIVE`이며, 주요 페이지·검색·Diagnostic·canonical을 확인했다.
 - 다만 HTTP status/body 기반 robots·sitemap·custom 404 QA와 모바일 viewport QA가 환경 제약으로 미확인이므로 Final Production readiness는 `COMPLETE`로 확정하지 않고 `LIVE / 일부 QA 미확인`으로 유지한다.
+
+### 2026-09-15 재확인
+- robots.txt, sitemap-index.xml, custom 404에 대해 curl 재요청을 수행했으나 동일한 DNS resolver 오류로 status `000`이 반환되어 HTTP 수준 확인은 계속 미확인이다.
+- 이번 재확인에서 코드·콘텐츠·Diagnostic 데이터·Search 구조는 변경하지 않았다.
