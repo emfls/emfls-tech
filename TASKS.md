@@ -40,11 +40,13 @@
 ## P2-4 — 운영
 - [x] Repository production-readiness QA
 - [x] 도메인·SEO·정책·보안·의존성 audit
-- [ ] 실제 production endpoint QA (배포/DNS 접근 확인 필요)
+- [x] Cloudflare Pages production deployment 및 custom domain 연결
+- [x] 주요 production endpoint·Search·Diagnostic·custom 404 live QA
+- [ ] robots.txt/sitemap 브라우저 직접 확인 (클라이언트 차단으로 재확인 필요)
 - [ ] 실제 GA4 Measurement ID 설정 후 연결 검토
 - [ ] 실제 AdSense publisher ID 및 심사 상태 확인
 
 ## P2-4 QA 판정
 - Repository readiness: 준비됨 (정적 build와 산출물 audit 기준)
-- Production readiness: BLOCKED / 미확인 (현재 외부 endpoint 접근 확인 불가)
+- Production readiness: LIVE (주요 페이지·기능 확인, robots/sitemap body와 HTTP status 일부 미확인)
 - AdSense review readiness: 사용자 계정·publisher ID 설정 필요

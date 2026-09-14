@@ -218,3 +218,27 @@
 - `npm run build`: 성공, 37개 정적 페이지 생성.
 - Repository QA에서 broken internal link 0, orphan Guide 0, invalid relatedGuide 0, duplicate title 0, duplicate description 0, invalid canonical 0, placeholder 0, user-facing TODO/FIXME 0, cross-project contamination 0을 확인했다.
 - P2-4에서는 신규 Guide/Category/기능, Search ranking/index 변경, Diagnostic flow 변경을 하지 않았다.
+
+## 2026-09-15 — Production Deployment + Live QA
+
+### 배포
+- Cloudflare Pages project `emfls-tech`를 생성하고 GitHub `emfls/emfls-tech`의 `main` branch에 연결했다.
+- Build command는 `npm run build`, output directory는 `dist`이며 별도 environment variable은 만들지 않았다.
+- 첫 production deployment 후 `/search/?q=` 직접 접근에서 query가 복원되지 않는 문제를 확인했다.
+- 기존 검색 구조는 유지하고 `src/scripts/search.ts`에 URL query를 초기 입력값으로 반영하는 최소 수정만 추가했다. 수정 커밋 `de24833`을 `main`에 push하고 production deployment `ef471615`를 실행했다.
+- 최종 deployment는 성공했으며 Pages URL은 `https://ef471615.emfls-tech.pages.dev`, production alias는 `https://tech.emfls.com`이다.
+
+### Domain / DNS
+- `tech.emfls.com`을 Pages custom domain으로 등록했다.
+- 해당 hostname에만 `CNAME tech.emfls.com → emfls-tech.pages.dev`를 추가했고 proxied 상태로 두었다. 다른 subdomain은 변경하지 않았다.
+
+### Live QA
+- Homepage, Search, Diagnose, About, Privacy, Contact, 대표 Guide 3개, 대표 Category 3개가 정상 렌더링되고 production canonical을 사용함을 확인했다.
+- Search `wifi` query에서 결과가 표시되고 실제 Guide 링크로 연결되는 것을 확인했으며, 직접 URL 접근 후 query 입력값과 결과가 복원된다.
+- Diagnostic `PC → 컴퓨터가 느리다 → 예` 흐름에서 결과 문구와 `/guides/pc-running-slow/` CTA를 확인했다. Reset과 이전 선택 버튼도 확인했다.
+- custom 404 경로에서 custom 404 UI와 홈 복귀 링크를 확인했다. 브라우저 도구에서 응답 status 숫자는 노출되지 않아 HTTP 404 status 자체는 미확인이다.
+- robots.txt와 sitemap 파일은 최종 deployment manifest에 존재한다. 브라우저 클라이언트가 두 endpoint를 차단해 live body와 HTTP status는 미확인으로 남겼다.
+
+### 운영 범위
+- GA4 Measurement ID와 AdSense publisher ID가 없어 연결하지 않았다. Web Analytics 설정도 비어 있다.
+- 신규 Guide/Category/기능, Search ranking/index 재작성, Diagnostic flow 변경, 다른 subdomain 변경은 하지 않았다.
