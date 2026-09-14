@@ -242,3 +242,23 @@
 ### 운영 범위
 - GA4 Measurement ID와 AdSense publisher ID가 없어 연결하지 않았다. Web Analytics 설정도 비어 있다.
 - 신규 Guide/Category/기능, Search ranking/index 재작성, Diagnostic flow 변경, 다른 subdomain 변경은 하지 않았다.
+
+## 2026-09-15 — Final Production Live QA
+
+### HTTP endpoint QA
+- `curl`로 `https://tech.emfls.com/robots.txt`, `/sitemap-index.xml`, `/__emfls-tech-404-test__/`를 요청했으나 현재 실행 환경의 DNS resolver가 hostname을 해석하지 못해 status `000`으로 종료됐다. 따라서 이 세 endpoint의 HTTP status와 body는 미확인이다.
+- Cloudflare Pages 최종 deployment manifest에는 `/robots.txt`, `/sitemap-index.xml`, `/sitemap-0.xml`, `/404.html`이 존재한다. 이것은 배포 파일 존재 확인이며 live HTTP 200/404를 대신하지 않는다.
+
+### Diagnostic live QA
+- `인터넷/Wi-Fi → Wi-Fi 속도가 느리다 → 예`에서 `/guides/wifi-slow/` 결과를 확인했다.
+- `스마트폰 → 저장공간이 부족하다 → 예`에서 `/guides/smartphone-storage-full/` 결과를 확인했다.
+- `주변기기 → USB 장치가 인식되지 않는다 → 예`에서 `/guides/usb-not-recognized/` 결과를 확인했다.
+- 세 흐름 모두 area 선택, symptom, question, outcome, Guide CTA를 확인했고 Reset 및 이전 선택 컨트롤이 존재함을 확인했다.
+
+### Mobile QA
+- 현재 in-app browser에는 viewport override 기능이 제공되지 않아 375px/390px 기준의 실제 모바일 viewport 검증은 미확인이다. 데스크톱 live DOM 기준으로 Homepage, Search, Diagnose, Guide, Category의 기본 구조와 overflow 없는 텍스트 표시만 확인했다.
+
+### 최종 판정
+- Repository readiness는 `COMPLETE`다.
+- Production deployment와 custom domain은 `LIVE`이며, 주요 페이지·검색·Diagnostic·canonical을 확인했다.
+- 다만 HTTP status/body 기반 robots·sitemap·custom 404 QA와 모바일 viewport QA가 환경 제약으로 미확인이므로 Final Production readiness는 `COMPLETE`로 확정하지 않고 `LIVE / 일부 QA 미확인`으로 유지한다.
