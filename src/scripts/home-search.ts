@@ -1,0 +1,2 @@
+const box=document.querySelector<HTMLElement>('.search-box');
+if(box){const form=document.createElement('form');form.className=box.className;form.action='/search/';form.method='get';form.setAttribute('role','search');const input=document.createElement('input');input.name='q';input.type='search';input.placeholder='예: Wi-Fi가 느리고 자꾸 끊겨요';input.setAttribute('aria-label','문제 검색');const button=document.createElement('button');button.type='submit';button.className='mono';button.textContent='SEARCH';form.append(input,button);box.replaceWith(form);}

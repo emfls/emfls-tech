@@ -1,0 +1,8 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { toSearchIndex } from '../data/search';
+import '../styles/search.css';
+const indexJson = JSON.stringify(toSearchIndex(await getCollection('guides'))).replace(/</g, '\\u003c');
+---
+<BaseLayout title="Guide 검색 — emfls tech" description="emfls tech의 생활 IT 문제 해결 Guide를 검색합니다." path="/search/"><section class="search-page"><div class="wrap search-wrap"><div class="eyebrow">Search the guides</div><h1>문제를 검색하세요.</h1><form class="search-form" role="search" action="/search/" method="get"><label class="sr-only" for="site-search">Guide 검색</label><input id="site-search" name="q" type="search" placeholder="예: 와이파이, 저장공간, 프린터" autocomplete="off" /><button type="submit">검색</button></form><p class="search-status" aria-live="polite" data-status>검색어를 입력하면 Guide를 찾습니다.</p><div class="search-results" data-results></div><div class="search-empty" data-empty hidden><h2>검색 결과를 찾지 못했습니다.</h2><p>검색어를 더 짧게 입력하거나 기기 이름과 증상을 입력해 보세요.</p><a href="/diagnose/">문제 진단 시작 →</a></div><div class="search-suggest" data-suggest><span class="eyebrow">Try a starting point</span><div>{['wifi','bluetooth','저장공간','프린터'].map((term)=><a href={`/search/?q=${encodeURIComponent(term)}`}>{term}</a>)}</div></div></div></section><script type="application/json" id="search-index" set:html={indexJson}></script><script src="../scripts/search.ts"></script></BaseLayout>
