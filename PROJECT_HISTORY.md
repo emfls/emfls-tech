@@ -502,3 +502,11 @@
 - 로컬 sitemap은 단일 urlset 37개로 Guide 20, Category 10, 정적 대상 7개를 포함한다.
 - Production 배포 후 `/sitemap.xml`, `/robots.txt`, 대표 canonical, custom 404를 live HTTP 수준에서 재검증한다.
 - Guide 20, Category 10, Search index 20, Diagnostic 16 flows와 Search/Diagnostic 동작은 변경하지 않는다.
+
+### Live 결과
+- commit `1b8f913`을 `main`에 push했고 Cloudflare Pages Production에 반영됐다.
+- `https://tech.emfls.com/sitemap.xml`: HTTP 200, 단일 `<urlset>`, URL 37개(Guide 20, Category 10, 정적 대상 7개), Editorial Policy 포함.
+- `https://tech.emfls.com/robots.txt`: HTTP 200, `Sitemap: https://tech.emfls.com/sitemap.xml`.
+- 대표 Guide와 Category의 slash 최종 URL 및 canonical이 일치한다. Homepage canonical은 `https://tech.emfls.com/`이다.
+- 존재하지 않는 URL은 HTTP 404이며 custom 404 페이지를 제공한다.
+- sitemap의 `http://www.sitemaps.org`는 XML namespace 선언이며 페이지 URL이 아니다. 실제 `<loc>`는 모두 `https://tech.emfls.com`이다.
