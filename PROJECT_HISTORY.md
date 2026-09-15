@@ -568,3 +568,11 @@
 - `npm run check`: 0 errors, 0 warnings; 기존 정보성 hints 5개. `npm run build`: 성공, 38 pages.
 - 배포 전후에 대표 페이지, OG 이미지, canonical, sitemap, robots, 404, Naver 인증 파일 및 internal link를 재확인하고, 배포 후 실제 custom domain에서 Live Visual QA를 완료한다.
 - 주의: 향후 시각 QA에서도 `global.css` 전체를 덮어쓰지 않고 별도 polish stylesheet 또는 최소 병합만 사용한다.
+
+## 2026-09-15 — Visual QA 후속 마감 수정
+
+- `BaseLayout.astro`가 제공하는 단일 `<main id="main-content">`와 중첩되던 Contact, Privacy, Editorial Policy 내부 `<main>`을 `<section class="trust-page">`로 변경했다.
+- build 산출물 기준 일반 HTML 페이지의 main landmark는 페이지당 1개이며, 정적 Naver 인증 파일은 문서 페이지가 아니므로 main landmark를 포함하지 않는다.
+- `public/images/tech-diagnostic-hero.png`를 제거하고 동일한 1774×887 비율의 `public/images/tech-diagnostic-hero.webp`로 최적화했다. 약 1.2MB에서 약 35KB로 줄였고 Homepage reference, width/height, alt를 유지했다.
+- `npm run check`: 0 errors, 0 warnings; 기존 정보성 hints 5개. `npm run build`: 성공, 38 pages.
+- 기존 Guide 20, Category 10, Search 20, Diagnostic 16, GA4, sitemap, robots, canonical, Naver verification, AdSense 상태는 변경하지 않았다.
