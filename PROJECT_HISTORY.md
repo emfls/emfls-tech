@@ -451,3 +451,8 @@
 ### AdSense readiness
 - 현재 판정: `NEEDS WORK`
 - 콘텐츠의 문제별 실질 정보와 분기 로직은 개선되어 WEAK Guide 0개가 되었지만, 실제 publisher ID 부재와 Contact 실사용 채널 부재는 별도 blocker로 남아 있다.
+
+### Production 배포 업데이트
+- commit `1ef7c88`을 `main`에 push했다.
+- 수정 Guide 5개(`wifi-keeps-disconnecting`, `smartphone-wifi-not-connecting`, `mac-storage-full`, `external-drive-not-recognized`, `windows-no-sound`)를 cache-busting URL로 live spot-check했다.
+- 모두 HTTP 200, trailing-slash canonical 정상, GA4 tag 1회였으며 콘텐츠 변경이 반영됐다.
