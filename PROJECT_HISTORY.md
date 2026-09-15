@@ -517,4 +517,5 @@
 - 저장소 루트의 중복 파일을 제거하고 `public/naver6dde13e69fe8ec25cd17e085c65c2124.html`로 이동했다.
 - `npm run build` 성공 후 `dist/naver6dde13e69fe8ec25cd17e085c65c2124.html` 존재를 확인했다.
 - `public` 원본과 `dist` 산출물의 내용이 byte-for-byte 동일함을 확인했다.
+- Cloudflare Pages의 HTML clean-URL redirect를 피하기 위해 해당 파일 경로만 `_redirects`에서 200 rewrite로 예외 처리했다.
 - 배포 commit과 Production HTTP status는 배포 후 기록한다.
