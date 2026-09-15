@@ -510,3 +510,11 @@
 - 대표 Guide와 Category의 slash 최종 URL 및 canonical이 일치한다. Homepage canonical은 `https://tech.emfls.com/`이다.
 - 존재하지 않는 URL은 HTTP 404이며 custom 404 페이지를 제공한다.
 - sitemap의 `http://www.sitemaps.org`는 XML namespace 선언이며 페이지 URL이 아니다. 실제 `<loc>`는 모두 `https://tech.emfls.com`이다.
+
+## 2026-09-15 — Naver 소유확인 파일 배포
+
+- 파일명: `naver6dde13e69fe8ec25cd17e085c65c2124.html`
+- 저장소 루트의 중복 파일을 제거하고 `public/naver6dde13e69fe8ec25cd17e085c65c2124.html`로 이동했다.
+- `npm run build` 성공 후 `dist/naver6dde13e69fe8ec25cd17e085c65c2124.html` 존재를 확인했다.
+- `public` 원본과 `dist` 산출물의 내용이 byte-for-byte 동일함을 확인했다.
+- 배포 commit과 Production HTTP status는 배포 후 기록한다.
