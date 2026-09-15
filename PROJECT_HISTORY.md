@@ -520,3 +520,9 @@
 - Cloudflare Pages의 HTML clean-URL redirect를 피하기 위해 해당 파일 경로만 `_redirects`에서 200 rewrite로 예외 처리했다.
 - 배포 commit `8121563`에 파일 이동을 반영했고, commit `456cd15`에 `_redirects` 예외를 반영했다.
 - Production `https://tech.emfls.com/naver6dde13e69fe8ec25cd17e085c65c2124.html`은 현재 HTTP 308으로 확장자 없는 경로로 redirect되어 직접 200 요구를 충족하지 못한다. Cloudflare Pages 기본 HTML clean-URL 동작이 blocker이며, 실제 소유확인 완료는 사용자 확인이 필요하다.
+
+## 2026-09-15 — Naver 소유확인 파일 교체
+
+- 기존 `naver6dde13e69fe8ec25cd17e085c65c2124.html`을 제거하고 `public/naverf25a6a23decbc53256c83fd625d68e88.html`로 교체했다.
+- 새 파일은 제공 원본을 수정하지 않았으며, build 후 `dist/naverf25a6a23decbc53256c83fd625d68e88.html`과 내용이 동일하다.
+- `_redirects`의 예외 경로도 새 파일명으로 갱신했다.
