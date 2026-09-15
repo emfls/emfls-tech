@@ -472,3 +472,33 @@
 - `dist/sitemap-index.xml`: 없음.
 - sitemap URL 36개: Guide 20, Category 10, Search 1, Diagnose 1 및 기존 공개 페이지.
 - sitemap 내 `tech.emfls.com` 외 domain 0개.
+
+## 2026-09-15 — EMFLS Network Baseline v1
+
+### 적용 범위
+- 대상은 `emfls-tech`와 `https://tech.emfls.com`으로 제한했다. 다른 EMFLS 프로젝트는 수정하지 않았다.
+- `trailingSlash: 'always'`를 Astro 설정에 명문화하고 기존 Guide, Category, Trust 페이지 내부 링크와 canonical을 최종 slash URL에 맞췄다.
+- `@astrojs/sitemap`과 rename hook을 제거하고 `src/pages/sitemap.xml.ts` 단일 `<urlset>` 자동 생성으로 전환했다.
+- sitemap에는 Homepage, Guide 20개, Category 10개, Search, Diagnose, About, Privacy, Contact, Editorial Policy를 포함하고 404·query URL·noindex 대상을 포함하지 않는다. Guide의 실제 `updatedDate`만 `lastmod`로 사용한다.
+- `robots.txt`의 Sitemap directive는 `https://tech.emfls.com/sitemap.xml`이다.
+
+### SEO / Structured Data
+- BaseLayout에 canonical override, noindex 지원, Twitter 기본 metadata, theme-color, favicon 계약을 최소 보강했다.
+- 실제 OG 이미지가 없어 가짜 `og:image` URL은 추가하지 않았다.
+- Homepage는 WebSite, Guide는 Article, breadcrumb가 있는 페이지는 BreadcrumbList를 사용하며 About/Privacy/Contact 등에는 불필요한 기본 schema를 출력하지 않는다.
+
+### Trust / 접근성 / 문서
+- 공개 `/editorial-policy/`를 추가하고 Footer에서 접근 가능하게 했다.
+- skip link, semantic main target, focus-visible 기존 동작, 약 44px touch target, `prefers-reduced-motion` 대응을 확인·보강했다.
+- 내부 운영 문서 `CONTENT_POLICY.md`, `LAUNCH_CHECKLIST.md`를 추가했다.
+
+### GA4 / AdSense
+- GA4 `G-ZL5RD70NKY`, production-only 로딩, gtag 1회/config 1회를 유지했다. GTM과 중복 analytics는 추가하지 않았다.
+- 실제 AdSense publisher ID가 없으므로 광고 코드와 `ads.txt`는 추가하지 않았다. AdSense implementation은 `BLOCKED / USER CONFIGURATION REQUIRED`로 유지한다.
+
+### 검증 및 배포
+- `npm run check`: 0 errors, 0 warnings; 기존 정보성 Astro hints 5개.
+- `npm run build`: 성공. `/sitemap.xml` 생성, `dist/sitemap-index.xml` 및 `dist/sitemap-0.xml` 미생성.
+- 로컬 sitemap은 단일 urlset 37개로 Guide 20, Category 10, 정적 대상 7개를 포함한다.
+- Production 배포 후 `/sitemap.xml`, `/robots.txt`, 대표 canonical, custom 404를 live HTTP 수준에서 재검증한다.
+- Guide 20, Category 10, Search index 20, Diagnostic 16 flows와 Search/Diagnostic 동작은 변경하지 않는다.

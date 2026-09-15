@@ -1,0 +1,28 @@
+# emfls-tech Launch Checklist
+
+- [ ] Build: `npm run build`
+- [ ] Check: `npm run check`
+- [ ] Homepage
+- [ ] Guide
+- [ ] Category
+- [ ] Search
+- [ ] Diagnose
+- [ ] About
+- [ ] Contact
+- [ ] Privacy
+- [ ] Editorial Policy
+- [ ] robots.txt
+- [ ] sitemap.xml
+- [ ] canonical
+- [ ] JSON-LD
+- [ ] Breadcrumb
+- [ ] favicon
+- [ ] GA4 `G-ZL5RD70NKY`
+- [ ] AdSense status / publisher ID
+- [ ] 404
+- [ ] mobile
+- [ ] broken links
+- [ ] placeholder
+- [ ] cross-project contamination
+- [ ] Cloudflare Production
+- [ ] custom domain

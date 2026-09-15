@@ -13,7 +13,7 @@ export const categoryMeta: Record<CategorySlug, { name: string; description: str
   troubleshooting: { name:'문제해결', description:'증상에서 시작해 원인을 좁히고 해결 순서를 세우는 가이드입니다.', problems:['원인 좁히기','기본 점검','안전한 복구'], related:['pc','mac','internet'] }
 };
 export const categories = categorySlugs.map((slug) => categoryMeta[slug].name);
-export const primaryNav = [{label:'문제 유형',href:'#problems'},{label:'기기별 해결',href:'#devices'},{label:'Tech Diagnostic',href:'#diagnostic'},{label:'소개',href:'/about'}];
+export const primaryNav = [{label:'문제 유형',href:'#problems'},{label:'기기별 해결',href:'#devices'},{label:'Tech Diagnostic',href:'#diagnostic'},{label:'소개',href:'/about/'}];
 export const problemTypes = [
   {label:'Wi-Fi',meta:'연결·속도',detail:'느린 무선 인터넷과 끊김을 점검합니다.',tone:'blue'},
   {label:'인터넷',meta:'공유기·회선',detail:'집 안 네트워크의 병목을 찾습니다.',tone:'green'},

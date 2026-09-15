@@ -2,27 +2,31 @@
 import '../styles/global.css';
 import { ga4MeasurementId, primaryNav } from '../data/site';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-interface Props { title: string; description: string; path?: string; type?: string; jsonLd?: Record<string, unknown>; breadcrumbs?: {label:string;href?:string}[] }
-const { title, description, path = Astro.url.pathname, type = 'WebSite', jsonLd, breadcrumbs } = Astro.props;
-const canonical = new URL(path, 'https://tech.emfls.com').toString();
-const structuredData = jsonLd ?? { '@context':'https://schema.org', '@type':type, name:'emfls tech', url:'https://tech.emfls.com', description };
+interface Props { title: string; description: string; path?: string; canonical?: string; noindex?: boolean; type?: string; jsonLd?: Record<string, unknown>; breadcrumbs?: {label:string;href?:string}[] }
+const { title, description, path = Astro.url.pathname, canonical: canonicalProp, noindex = false, type = 'WebSite', jsonLd, breadcrumbs } = Astro.props;
+const canonical = canonicalProp ?? new URL(path, 'https://tech.emfls.com').toString();
+const structuredData = jsonLd ?? (Astro.url.pathname === '/' ? { '@context':'https://schema.org', '@type':'WebSite', name:'emfls tech', url:'https://tech.emfls.com/', description } : null);
+const ogType = type === 'Article' ? 'article' : 'website';
 ---
 <!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" /><meta name="viewport" content="width=device-width" />
     <title>{title}</title><meta name="description" content={description} />
-    <link rel="canonical" href={canonical} /><meta property="og:type" content="website" />
+    {noindex && <meta name="robots" content="noindex,follow" />}
+    <link rel="canonical" href={canonical} /><meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="emfls tech" /><meta property="og:title" content={title} />
     <meta property="og:description" content={description} /><meta property="og:url" content={canonical} />
-    <link rel="icon" href="/favicon.svg" />
+    <meta name="twitter:card" content="summary" /><meta name="twitter:title" content={title} /><meta name="twitter:description" content={description} />
+    <link rel="icon" href="/favicon.svg" /><meta name="theme-color" content="#15243a" />
     {import.meta.env.PROD && <><script async src={`https://www.googletagmanager.com/gtag/js?id=${ga4MeasurementId}`}></script><script is:inline define:vars={{ ga4MeasurementId }}>window.dataLayer = window.dataLayer || []; function gtag(){window.dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', ga4MeasurementId);</script></>}
-    <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+    {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>}
   </head>
   <body>
+    <a class="skip-link" href="#main-content">본문으로 바로가기</a>
     <header class="site-header"><div class="wrap nav"><a class="brand" href="/">emfls <span>tech</span></a><nav class="nav-links" aria-label="주요 메뉴">{primaryNav.map((item)=><a href={item.href}>{item.label}</a>)}<a href="/search/">검색</a><a href="/diagnose/">진단</a></nav></div></header>
     {breadcrumbs && <div class="wrap breadcrumb-wrap"><Breadcrumbs items={breadcrumbs} /></div>}
-    <main><slot /></main>
-    <footer class="site-footer"><div class="wrap footer-grid"><div><a class="brand" href="/">emfls <span>tech</span></a><p>일상적인 IT 문제를 푸는 방법</p></div><nav class="footer-links" aria-label="푸터 메뉴"><a href="/search/">검색</a><a href="/diagnose/">진단</a><a href="/about">소개</a><a href="/privacy">개인정보처리방침</a><a href="/contact">문의</a></nav></div></footer>
+    <main id="main-content"><slot /></main>
+    <footer class="site-footer"><div class="wrap footer-grid"><div><a class="brand" href="/">emfls <span>tech</span></a><p>일상적인 IT 문제를 푸는 방법</p></div><nav class="footer-links" aria-label="푸터 메뉴"><a href="/search/">검색</a><a href="/diagnose/">진단</a><a href="/about/">소개</a><a href="/privacy/">개인정보처리방침</a><a href="/contact/">문의</a><a href="/editorial-policy/">편집 원칙</a></nav></div></footer>
   </body>
 </html>
