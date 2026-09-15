@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { primaryNav } from '../data/site';
+import { ga4MeasurementId, primaryNav } from '../data/site';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 interface Props { title: string; description: string; path?: string; type?: string; jsonLd?: Record<string, unknown>; breadcrumbs?: {label:string;href?:string}[] }
 const { title, description, path = Astro.url.pathname, type = 'WebSite', jsonLd, breadcrumbs } = Astro.props;
@@ -16,6 +16,7 @@ const structuredData = jsonLd ?? { '@context':'https://schema.org', '@type':type
     <meta property="og:site_name" content="emfls tech" /><meta property="og:title" content={title} />
     <meta property="og:description" content={description} /><meta property="og:url" content={canonical} />
     <link rel="icon" href="/favicon.svg" />
+    {import.meta.env.PROD && <><script async src={`https://www.googletagmanager.com/gtag/js?id=${ga4MeasurementId}`}></script><script is:inline define:vars={{ ga4MeasurementId }}>window.dataLayer = window.dataLayer || []; function gtag(){window.dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', ga4MeasurementId);</script></>}
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
   </head>
   <body>

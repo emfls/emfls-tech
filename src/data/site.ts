@@ -23,3 +23,4 @@ export const problemTypes = [
   {label:'Bluetooth',meta:'연결·주변기기',detail:'페어링과 오디오 연결을 확인합니다.',tone:'cyan'}
 ];
 export const devices = ['PC','Mac','스마트폰','인터넷 / Wi-Fi','주변기기'];
+export const ga4MeasurementId = 'G-ZL5RD70NKY';

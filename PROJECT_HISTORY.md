@@ -266,3 +266,108 @@
 ### 2026-09-15 재확인
 - robots.txt, sitemap-index.xml, custom 404에 대해 curl 재요청을 수행했으나 동일한 DNS resolver 오류로 status `000`이 반환되어 HTTP 수준 확인은 계속 미확인이다.
 - 이번 재확인에서 코드·콘텐츠·Diagnostic 데이터·Search 구조는 변경하지 않았다.
+
+## 2026-09-15 — Final Production Live QA 완료
+
+### robots.txt
+- `https://tech.emfls.com/robots.txt` 실제 HTTP 요청 결과 status `200`, body 접근 가능.
+- 전체 차단 없음: `User-agent: *`에 `Allow: /`가 존재한다. 일부 확장 crawler 차단 지시는 사이트 전체 차단으로 보지 않았다.
+- sitemap directive는 `https://tech.emfls.com/sitemap-index.xml`이며 다른 domain/subdomain은 없다.
+
+### sitemap
+- `https://tech.emfls.com/sitemap-index.xml` status `200`, 정상 XML index.
+- child `https://tech.emfls.com/sitemap-0.xml` status `200`, 정상 XML body.
+- Production URL 36개: Guide 20개, Category 10개, Search 1개, Diagnose 1개, About/Privacy/Contact 및 homepage 포함.
+- 404 URL, `pages.dev` URL, 다른 domain/subdomain은 확인되지 않았다.
+
+### custom 404
+- `https://tech.emfls.com/__emfls-tech-404-test__/` 실제 HTTP status `404`.
+- custom title은 `페이지를 찾을 수 없습니다 — emfls tech`, body에 404 안내와 홈 링크가 존재한다.
+
+### Diagnostic 추가 flow
+- `인터넷/Wi-Fi → Wi-Fi 속도가 느리다 → 예` 결과 Guide `/guides/wifi-slow/` 확인.
+- `스마트폰 → 저장공간이 부족하다 → 예` 결과 Guide `/guides/smartphone-storage-full/` 확인.
+- `주변기기 → USB 장치가 인식되지 않는다 → 예` 결과 Guide `/guides/usb-not-recognized/` 확인.
+- 세 flow에서 area, symptom, question, outcome, Guide CTA를 확인했고 Reset 및 이전 선택 컨트롤을 확인했다.
+
+### Canonical
+- homepage: `https://tech.emfls.com/`
+- Guide: `https://tech.emfls.com/guides/wifi-slow`
+- Category: `https://tech.emfls.com/category/wifi`
+- Search: `https://tech.emfls.com/search/`
+- Diagnose: `https://tech.emfls.com/diagnose/`
+
+### Mobile QA
+- 실제 Production DOM/CSS와 모바일 User-Agent 응답을 점검했다.
+- CSS에는 모바일 기본 레이아웃, `min-width: 0`, breadcrumb horizontal scroll, Search button 모바일 padding, 760px/700px 이상에서만 desktop grid가 적용되어 모바일 overflow 방지 규칙이 있다.
+- 현재 브라우저 제어 표면에 375px/390px viewport override가 노출되지 않아 두 폭의 실제 viewport screenshot 직접 검증은 미확인으로 남긴다. 코드상 명백한 Production bug는 발견하지 못했고 수정하지 않았다.
+
+### 변경 및 최종 판정
+- 신규 기능/콘텐츠/Search/Diagnostic/SEO 변경 없음. `PROJECT_HISTORY.md`에 QA 결과만 기록했다.
+- Repository readiness = `COMPLETE`
+- Production readiness = `LIVE / 일부 QA 미확인` (HTTP QA 및 Diagnostic/canonical 통과; 모바일 실제 viewport 직접 검증은 환경상 미확인)
+- GA4 = `USER CONFIGURATION REQUIRED`
+- AdSense = `USER CONFIGURATION REQUIRED`
+- blocker: 375px/390px 실제 viewport 직접 검증 미확인. 브라우저 viewport 지원 시 재확인 필요.
+
+## 2026-09-15 — Final Closure QA
+
+### Canonical trailing slash
+- Astro static output 정책은 directory index URL을 생성하며 Cloudflare Production은 slash 없는 Guide/Category URL을 slash URL로 `308` redirect한다.
+- `/guides/wifi-slow` → `/guides/wifi-slow/`, 최종 HTML canonical은 `https://tech.emfls.com/guides/wifi-slow/`다.
+- `/category/wifi` → `/category/wifi/`, 최종 HTML canonical은 `https://tech.emfls.com/category/wifi/`다.
+- Homepage/Search/Diagnose/About의 기존 canonical 생성 방식은 유지했다. Homepage/Search/Diagnose는 기존 slash 정책과 일치하며 About은 기존 `/about` 정책을 변경하지 않았다.
+- 수정 commit `8a997d7`을 `main`에 push했고 Cloudflare Pages Production 배포 후 live HTML에서 재검증했다.
+
+### Mobile viewport QA
+- 실제 Production browser viewport `375px × 844px`와 `390px × 844px`에서 Homepage, Search, Diagnose, Guide, Category를 각각 열었다.
+- 두 viewport 모두 다섯 페이지에서 `document.documentElement.scrollWidth === window.innerWidth`로 horizontal overflow가 없었다.
+- Homepage: header, search input/button, category cards, footer 정상.
+- Search: header, search input/button, footer 정상.
+- Diagnose: header, 6개 diagnostic buttons, footer 정상.
+- Guide: header, breadcrumb, Guide 본문, related Guide, footer 정상.
+- Category: header, breadcrumb, category/Guide cards, footer 정상.
+- 모바일 명백한 Production bug는 발견되지 않아 추가 수정하지 않았다.
+
+### Closure 판정
+- `npm run check`: 0 errors, 0 warnings, 기존 4 hints.
+- `npm run build`: 성공, 37 pages.
+- Production deployment: commit `8a997d7` push 후 live canonical/viewport 재검증 완료.
+- broken links: 이번 범위에서 발견 없음.
+- Repository readiness = `COMPLETE`
+- Production readiness = `COMPLETE / LIVE`
+- blocker = 없음.
+
+## 2026-09-15 — GA4 Production Analytics 연결 점검
+
+### 결과
+- 대상은 `emfls-tech` / `https://tech.emfls.com`으로 한정했다.
+- 저장소 전체에서 실제 GA4 Measurement ID(`G-...`), Google tag, `gtag.js`, Google Tag Manager, 중복 Analytics script, analytics 관련 environment/config를 찾지 못했다.
+- 실제 Measurement ID가 제공되지 않았으므로 placeholder나 가짜 ID를 Production 코드에 삽입하지 않았다.
+- GA4 코드 추가, Privacy 수정, check/build, commit/push, Cloudflare Pages 배포, live tag 검증은 수행하지 않았다.
+- 현재 Privacy 문구의 “분석 도구를 사용하지 않습니다” 상태는 실제 구현과 일치하므로 수정하지 않았다.
+
+### 최종 판정
+- GA4 implementation = `BLOCKED`
+- Reason = `실제 GA4 Measurement ID 필요`
+- GA4 live collection = `사용자 확인 필요`
+- 향후 Measurement ID가 제공되면 단일 설정 지점과 공통 `BaseLayout`의 Production-only Google tag로 연결한다.
+
+## 2026-09-15 — GA4 Production Analytics 연결 완료
+
+### 구현
+- 사용자 제공 Measurement ID `G-ZL5RD70NKY`를 `src/data/site.ts`의 단일 설정 지점에 저장했다.
+- 공통 `src/layouts/BaseLayout.astro`에서 Google tag와 `gtag('config', ...)`를 한 번만 로드한다.
+- `import.meta.env.PROD` 조건으로 Production build에서만 활성화되며, 페이지별·Guide별 analytics 코드는 추가하지 않았다.
+- 별도 analytics library, GTM, custom event는 추가하지 않았다. 기본 page_view 수집만 구성했다.
+
+### Privacy 및 검증
+- `src/pages/privacy.astro`를 실제 GA4 사용 상태에 맞게 최소 수정했다.
+- `npm run check`: 0 errors, 0 warnings, 기존 정보성 hints 5개.
+- `npm run build`: 성공, 37 pages.
+- 산출물의 Homepage, Guide, Search, Diagnose에 동일 ID의 Google tag가 각각 1개씩 생성되고 중복 script가 없음을 확인했다.
+
+### 배포 및 live 확인
+- 이후 `main`에 commit/push하고 Cloudflare Pages Production 배포를 진행한다.
+- Homepage, Guide, Search, Diagnose의 live Google tag request와 JS error를 확인한다.
+- GA4 Realtime/DebugView는 현재 property 화면 접근 여부를 확인한 뒤 결과를 추가 기록한다.
