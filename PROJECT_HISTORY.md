@@ -540,3 +540,17 @@
 - 주의: 향후 Baseline 적용 시 `global.css` 전체를 덮어쓰지 말고 기존 디자인 CSS에 접근성 규칙을 병합한다.
 - 복구 commit `0a81325`를 `main`에 push하고 Cloudflare Pages Production에 반영했다.
 - `https://tech.emfls.com/`에서 CSS asset HTTP 200, `:root`·`.hero`·`.skip-link` 스타일 존재, 배경색과 typography 정상, horizontal overflow 없음을 확인했다.
+
+## 2026-09-15 — Full Visual Design QA & Polish
+
+- 검사 대상은 `emfls-tech`와 `https://tech.emfls.com`으로 한정했다.
+- 검사 페이지: Homepage, Search, Diagnose, 대표 Guide 5개, 대표 Category 4개, About, Privacy, Contact, Editorial Policy.
+- 검사 viewport 기준: 1440, 1280, 768, 390, 375px. 기존 responsive breakpoint와 실제 브라우저 렌더링을 대조했다.
+- P0/P1: 없음. P2: 모바일에서 header 주요 기능 접근성이 약했고 Guide 본문 대비가 낮았으며 좁은 폭에서 meta wrapping 여지가 있었다.
+- 수정: 모바일용 Search/Diagnose compact navigation 추가, Guide 본문 paragraph/list 색상 강화, Guide meta flex-wrap 보강.
+- 이미지 생성: 없음. 현재 editorial technical UI는 이미지 없이도 목적을 충족하며 가짜 screenshot/OG asset을 추가하지 않았다.
+- 기존 디자인 CSS 전체와 component CSS import 구조는 유지했다. `global.css` 대량 삭제나 재작성은 없었다.
+- 기능 회귀 확인: Guide 20, Category 10, Search index 20, Diagnostic 16, sitemap 37 URL, broken links 0.
+- `npm run check`: 0 errors, 0 warnings; 기존 정보성 hints 5개.
+- `npm run build`: 성공, 38 pages.
+- 배포 commit `7c4ed4a`를 `main`에 push했다. Production live CSS asset HTTP 200 및 homepage의 배경, typography, Hero, Diagnostic, Footer, overflow를 확인했다.
