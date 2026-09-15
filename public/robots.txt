@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tech.emfls.com/sitemap-index.xml
+Sitemap: https://tech.emfls.com/sitemap.xml

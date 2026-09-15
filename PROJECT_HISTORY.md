@@ -456,3 +456,19 @@
 - commit `1ef7c88`을 `main`에 push했다.
 - 수정 Guide 5개(`wifi-keeps-disconnecting`, `smartphone-wifi-not-connecting`, `mac-storage-full`, `external-drive-not-recognized`, `windows-no-sound`)를 cache-busting URL로 live spot-check했다.
 - 모두 HTTP 200, trailing-slash canonical 정상, GA4 tag 1회였으며 콘텐츠 변경이 반영됐다.
+
+## 2026-09-15 — Sitemap URL 정리
+
+### 변경
+- `@astrojs/sitemap`의 자동 URL 수집은 유지했다.
+- Astro sitemap integration이 생성하는 `sitemap-0.xml`을 build 완료 hook에서 자동으로 `dist/sitemap.xml`로 rename하고 생성된 `sitemap-index.xml`을 제거한다.
+- `public/robots.txt`의 Sitemap directive를 `https://tech.emfls.com/sitemap.xml`로 변경했다.
+- 기존 historical QA 기록의 `sitemap-index.xml` 언급은 당시 상태를 보존하기 위해 임의로 덮어쓰지 않았다.
+
+### 검증
+- `npm run check`: 0 errors, 0 warnings, 기존 정보성 hints 5개.
+- `npm run build`: 성공, 37 pages.
+- `dist/sitemap.xml`: 존재.
+- `dist/sitemap-index.xml`: 없음.
+- sitemap URL 36개: Guide 20, Category 10, Search 1, Diagnose 1 및 기존 공개 페이지.
+- sitemap 내 `tech.emfls.com` 외 domain 0개.
