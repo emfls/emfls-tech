@@ -379,3 +379,75 @@
 - 실제 브라우저에서 네 페이지 모두 `https://www.google-analytics.com/g/collect` 요청과 `en=page_view`를 확인했고 JS error는 없었다.
 - GA4 Realtime/DebugView property 화면은 현재 접근하지 못해 실제 보고서 반영 여부는 `사용자 확인 필요`다.
 - GA4 implementation = `LIVE`
+
+## 2026-09-15 — AdSense Review Readiness Audit
+
+### AdSense 상태
+- 대상은 `emfls-tech` / `https://tech.emfls.com`으로 한정했다.
+- 저장소 전체와 Production 대표 HTML에서 `adsbygoogle`, `pagead.googlesyndication.com`, `ca-pub-`, 광고 slot, 광고 placeholder를 찾지 못했다.
+- 실제 AdSense publisher/client ID가 제공되지 않았고 `public/ads.txt`도 없다.
+- 가짜 publisher ID, 광고 코드, 빈 광고 영역, 임의 `ads.txt`는 추가하지 않았다.
+
+### 콘텐츠 품질
+- Guide 20개 전체를 확인했다. 각 Guide는 개별 문제 제목과 category/device/problemType, symptoms, causes, checks, solutions, warnings를 갖고 있다.
+- exact duplicate body는 0건이며, Wi-Fi 느림·Wi-Fi 연결 끊김·Wi-Fi 연결 후 인터넷 불가·인터넷 회선 끊김은 서로 다른 문제 범위와 확인 순서를 설명한다.
+- placeholder와 의미 없는 Guide는 발견하지 못했다.
+- 일부 Guide의 본문은 짧고 공통 템플릿 구조가 반복되어 AdSense 심사에서 thin-content/템플릿형 콘텐츠로 보일 위험이 있다. 이번 요청은 audit-only이므로 콘텐츠를 임의 확장하지 않았다.
+
+### Empty Category
+- `설정`, `문제해결`은 Guide 목록이 비어 있지만 대표 문제 유형, 관련 Category, Search/Diagnose/홈 CTA가 있는 landing page다.
+- 단순 빈 페이지는 아니나, 독립적인 Guide가 없다는 점은 심사상 주의사항으로 남긴다.
+
+### Trust / Navigation
+- About: 사이트 목적과 PC·Mac·스마트폰·인터넷·Wi-Fi·주변기기 범위가 실제 콘텐츠와 일치한다.
+- Privacy: GA4 사용 및 페이지 조회 통계 문구가 실제 `G-ZL5RD70NKY` 구현과 일치한다.
+- Contact: placeholder 이메일은 없지만 실제 연락 채널이 아직 준비 중이라고 안내한다. 심사 준비상 개선 필요.
+- Header/Footer/Search/Diagnose/Category/Guide/Breadcrumb 경로를 확인했다.
+
+### Production / Technical
+- 대표 Homepage, Guide 3개, Category 3개, Search, Diagnose, About, Privacy, Contact 모두 HTTP 200.
+- `robots.txt` 200, sitemap index/child 200, sitemap URL 36개, custom 404 실제 404.
+- 대표 canonical, title, description, Guide Article/Breadcrumb JSON-LD를 확인했다.
+- 36개 sitemap 페이지의 내부 링크 audit 결과 broken link 0건.
+- GA4 `G-ZL5RD70NKY`는 페이지당 Google tag 1회, GTM 0개이며 AdSense 작업으로 GA4를 변경하지 않았다.
+
+### 판정
+- AdSense implementation = `BLOCKED`
+- AdSense review readiness = `NEEDS WORK`
+- 주된 이유: 실제 publisher ID 부재, Contact의 실사용 연락 채널 부재, 일부 짧고 반복적인 Guide 본문에 대한 thin-content 심사 위험.
+- 다음 작업: 실제 publisher ID와 Google이 요구하는 정확한 `ads.txt` 내용을 확보한 뒤 별도 연결 작업을 진행한다. 콘텐츠/Contact 개선은 별도 승인 후 진행한다.
+- 이번 audit에서 코드·콘텐츠·SEO·GA4·다른 프로젝트는 변경하지 않았다.
+
+## 2026-09-15 — P2-5 AdSense Content Quality Remediation
+
+### 수정 전 Audit
+- Guide 20개를 전수 검토했다.
+- 초기 분포: STRONG 5, ADEQUATE 5, WEAK 10.
+- WEAK 대상: `wifi-keeps-disconnecting`, `smartphone-wifi-not-connecting`, `mac-storage-full`, `mac-running-slow`, `laptop-battery-draining-fast`, `smartphone-battery-draining-fast`, `keyboard-not-working`, `mouse-not-working`, `windows-no-sound`, `external-drive-not-recognized`.
+- exact duplicate intent 0, placeholder 0.
+
+### 개선
+- 수정 Guide 10개. Guide 수와 frontmatter schema는 유지했다.
+- 네트워크: 전체 기기/한 기기, 거리·벽·간섭, 2.4GHz/5GHz, 인증과 연결 단계 분기 추가.
+- 저장공간/외장 드라이브: OS별 표시 위치, 전원·연결·마운트 단계, 포맷·초기화 전 데이터 보호 경고 추가.
+- 성능/배터리: CPU·메모리·저장공간, 앱 사용량·화면·배터리 상태를 분리하는 확인 순서 추가.
+- 주변기기/소리: 포인터·클릭·스크롤, 출력 장치·앱별 음량, 다른 앱·포트·컴퓨터 비교 절차 추가.
+- 변경하지 않은 Guide 10개는 기존 내용이 주제별 분기와 안전한 해결 순서를 충분히 제공해 유지했다.
+
+### 수정 후 Audit
+- 최종 분포: STRONG 15, ADEQUATE 5, WEAK 0.
+- duplicate intent 0, placeholder 0, invalid relatedGuide 0, broken Markdown 0.
+- `설정`과 `문제해결` Category는 Guide 0개지만 문제 유형, 관련 Category, Search/Diagnose CTA가 있는 landing page로 유지했다.
+- Contact에는 실제 연락 채널이 없어 임의 이메일을 추가하지 않았다.
+
+### 검증 및 배포
+- `npm run check`: 0 errors; 기존 Astro 정보성 hints만 존재. 첫 실행의 glob-loader duplicate-id 경고는 재실행에서 재현되지 않았다.
+- `npm run build`: 성공, 37 pages.
+- Guide 20, Category 10, Search index 20, Diagnostic flow 16 유지.
+- Search/Diagnostic/GA4/SEO 구조는 변경하지 않았다. GA4 `G-ZL5RD70NKY`의 중복도 발생하지 않았다.
+- 배포 전 Production spot-check와 내부 링크 audit은 기존 기준에서 broken links 0을 유지했다.
+- 이번 변경은 본문 Markdown, 계획 문서, `PROJECT_HISTORY.md`에 한정했다.
+
+### AdSense readiness
+- 현재 판정: `NEEDS WORK`
+- 콘텐츠의 문제별 실질 정보와 분기 로직은 개선되어 WEAK Guide 0개가 되었지만, 실제 publisher ID 부재와 Contact 실사용 채널 부재는 별도 blocker로 남아 있다.
