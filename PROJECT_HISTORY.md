@@ -526,3 +526,15 @@
 - 기존 `naver6dde13e69fe8ec25cd17e085c65c2124.html`을 제거하고 `public/naverf25a6a23decbc53256c83fd625d68e88.html`로 교체했다.
 - 새 파일은 제공 원본을 수정하지 않았으며, build 후 `dist/naverf25a6a23decbc53256c83fd625d68e88.html`과 내용이 동일하다.
 - `_redirects`의 예외 경로도 새 파일명으로 갱신했다.
+
+## 2026-09-15 — Production CSS Regression 복구
+
+- 원인: Network Baseline v1 commit `1b8f9136066fb5e82b64e44dd8cdcbfa6bc7d89e`에서 `src/styles/global.css`가 기존 전체 디자인 대신 접근성 CSS 한 줄로 축소됐다.
+- 복구 기준: baseline 직전 commit `bf78049fe84ae986694995d26ac72397bd1ad159`의 `src/styles/global.css` 전체를 복원했다.
+- 기존 `:root`, reset, typography, layout, hero, card, diagnostic, guide, category, footer, responsive rules를 복구하고 `.skip-link`, focus, touch target, footer padding, `prefers-reduced-motion`만 병합했다.
+- Breadcrumbs/navigation/guides/search/home-search/diagnostic CSS import 구조는 변경하지 않았다.
+- `npm run check`: 0 errors, 0 warnings; 기존 정보성 hints 5개.
+- `npm run build`: 성공, 38 pages 및 CSS asset 생성.
+- 로컬 브라우저에서 Homepage, Search, Diagnose, 대표 Guide, Category, About의 배경·typography·header·card·diagnostic·footer와 overflow를 확인했다.
+- 이번 복구에서는 sitemap, canonical, GA4, Search, Diagnostic, Guide/Category 콘텐츠, Naver 인증 파일을 변경하지 않았다.
+- 주의: 향후 Baseline 적용 시 `global.css` 전체를 덮어쓰지 말고 기존 디자인 CSS에 접근성 규칙을 병합한다.
