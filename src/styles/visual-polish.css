@@ -1,0 +1,71 @@
+.hero-copy{min-width:0}
+.hero-visual{display:grid;gap:16px;align-content:end}
+.hero-visual img{display:block;width:100%;height:auto;border:1px solid #cbd5e1;border-radius:14px;background:#eef5ff}
+.trust-page{padding:72px 0 104px}
+.trust-wrap{max-width:1000px}
+.narrow-trust{max-width:820px}
+.trust-hero{max-width:780px;padding-bottom:44px;border-bottom:1px solid var(--line)}
+.trust-hero h1{font-size:clamp(2.5rem,7vw,5rem);line-height:1.04;letter-spacing:-.08em;margin:14px 0 22px;text-wrap:balance}
+.trust-hero h1 span{color:var(--blue)}
+.trust-lead{max-width:650px;color:var(--muted);font-size:1.1rem;line-height:1.75}
+.trust-section{padding:48px 0;border-bottom:1px solid var(--line)}
+.trust-section h2{font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-.06em;margin:8px 0 24px;text-wrap:balance}
+.principle-grid,.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.contact-grid{grid-template-columns:repeat(2,1fr);margin-top:28px}
+.principle-card{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:22px;min-height:170px}
+.principle-card h2,.principle-card h3{margin:20px 0 8px;font-size:1.05rem;line-height:1.35}
+.principle-card p{margin:0;color:var(--muted);font-size:.9rem;line-height:1.7}
+.principle-index{font:500 .72rem 'DM Mono',monospace;color:var(--blue)}
+.flow-panel{display:grid;grid-template-columns:.8fr 1.2fr;gap:32px;align-items:center}
+.flow-panel p{max-width:500px;color:var(--muted)}
+.mini-flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:20px;background:var(--ink);color:#fff;border-radius:10px}
+.mini-flow span{padding:8px 10px;border:1px solid #456078;border-radius:999px;font-size:.8rem}
+.mini-flow i{color:#8ed8ff;font-style:normal}
+.principle-callout{background:#eef5ff;border:1px solid #c7dcf5;border-radius:10px;padding:28px;margin-top:36px}
+.principle-callout p{max-width:650px;color:var(--muted)}
+.pill-link{display:inline-flex;min-height:44px;align-items:center;padding:8px 14px;border:1px solid #9dbde8;border-radius:999px;color:var(--blue);font-size:.85rem}
+.info-panel,.summary-panel{display:grid;gap:8px;background:var(--ink);color:#fff;border-radius:10px;padding:24px;margin:34px 0}
+.info-panel strong,.summary-panel strong{font-size:1.25rem}
+.info-panel p,.summary-panel p{color:#b7c5d6;margin:0;line-height:1.7}
+.status-label{color:#8ed8ff;font:500 .72rem 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em}
+.trust-prose{max-width:700px}
+.trust-prose h2{margin-top:44px}
+.trust-prose h2:first-child{margin-top:0}
+.trust-prose p,.trust-prose li{line-height:1.85}
+.trust-prose ul,.trust-prose ol{padding-left:22px}
+.trust-prose a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+.numbered-prose h2{display:flex;gap:12px;align-items:baseline}
+.numbered-prose h2 span{font:500 .72rem 'DM Mono',monospace;color:var(--blue);letter-spacing:.08em}
+.prose{line-height:1.75}
+.prose p{margin:0 0 20px}
+.prose h2{line-height:1.25;text-wrap:balance}
+.prose h3{font-size:1.15rem;line-height:1.35;margin:28px 0 10px}
+.prose ul,.prose ol{margin:0 0 24px;padding-left:22px}
+.prose li{margin:8px 0}
+.prose a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+.prose blockquote{border-left:3px solid var(--blue);margin:28px 0;padding:12px 18px;background:#eef5ff;color:var(--ink)}
+.prose code{background:#eef2f6;border:1px solid var(--line);border-radius:4px;padding:2px 5px;font-size:.9em}
+.prose pre{overflow:auto;background:var(--ink);color:#e6eff8;border-radius:8px;padding:18px;line-height:1.6}
+.prose kbd{border:1px solid #b8c3cf;border-bottom-width:2px;border-radius:4px;padding:2px 6px;background:var(--white);font-size:.85em}
+.prose hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+.site-footer .footer-grid{align-items:flex-start}
+@media(max-width:759px){
+  .hero{padding:52px 0 48px}
+  .hero h1{font-size:clamp(2.8rem,15vw,4.2rem);text-wrap:balance}
+  .hero-visual{margin-top:8px}
+  .hero-visual img{max-height:220px;object-fit:cover}
+  .trust-page{padding:52px 0 72px}
+  .trust-hero{padding-bottom:32px}
+  .principle-grid,.contact-grid,.flow-panel{grid-template-columns:1fr}
+  .flow-panel{gap:20px}
+  .mini-flow{font-size:.8rem}
+  .site-footer{padding:34px 0}
+  .site-footer .footer-grid{display:grid;gap:24px}
+  .footer-links{gap:4px 16px}
+}
+@media(min-width:760px){
+  .hero-grid{grid-template-columns:1.05fr .95fr;align-items:end;gap:44px}
+}
+@media(min-width:1100px){
+  .hero-grid{gap:64px}
+}

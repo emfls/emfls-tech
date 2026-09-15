@@ -554,3 +554,17 @@
 - `npm run check`: 0 errors, 0 warnings; 기존 정보성 hints 5개.
 - `npm run build`: 성공, 38 pages.
 - 배포 commit `7c4ed4a`를 `main`에 push했다. Production live CSS asset HTTP 200 및 homepage의 배경, typography, Hero, Diagnostic, Footer, overflow를 확인했다.
+
+## 2026-09-15 — Visual Design QA 2차 / 실제 디자인 개선
+
+- 작업 대상은 `emfls-tech`와 `https://tech.emfls.com`으로 한정했다. 다른 EMFLS 프로젝트와 파일은 변경하지 않았다.
+- Homepage는 기존 검색·진단 진입 구조를 유지하면서 hero copy/visual/status를 분리하고, 진단 흐름을 표현하는 전용 visual asset을 적용했다.
+- 생성·적용 이미지: `public/images/tech-diagnostic-hero.png` (1774×887, alt 제공), `public/og-image.png` (1200×630). BaseLayout에 `og:image`, `twitter:image`, `summary_large_image`를 연결했으며 가짜 URL은 사용하지 않았다.
+- About, Privacy, Contact, Editorial Policy에 공통 Trust 레이아웃을 적용해 목적·운영 원칙·현재 상태·문의 한계를 시각적으로 구분했다. Contact에는 확인되지 않은 가짜 이메일을 추가하지 않았다.
+- 일반 prose와 Trust prose에 한국어 제목 개행, 본문 행간, 목록·링크·코드·인용·위험 작업 안내 스타일을 보강했다.
+- 모바일 375/390px에서 hero, Trust 카드, footer를 한 열로 정리하고 header/footer의 간격과 터치 영역을 유지했다. 768px은 태블릿 단일 열 전환, 1280/1440px은 hero 2열과 넓은 여백을 확인 기준으로 삼았다.
+- 기존 `global.css`의 디자인 규칙은 삭제·대체하지 않고 `src/styles/visual-polish.css`를 추가 import해 병합했다.
+- 보호 대상 유지: Guide 20, Category 10, Search index 20, Diagnostic 16, GA4 `G-ZL5RD70NKY`, sitemap/robots/canonical, Naver verification, 기존 URL 구조.
+- `npm run check`: 0 errors, 0 warnings; 기존 정보성 hints 5개. `npm run build`: 성공, 38 pages.
+- 배포 전후에 대표 페이지, OG 이미지, canonical, sitemap, robots, 404, Naver 인증 파일 및 internal link를 재확인하고, 배포 후 실제 custom domain에서 Live Visual QA를 완료한다.
+- 주의: 향후 시각 QA에서도 `global.css` 전체를 덮어쓰지 않고 별도 polish stylesheet 또는 최소 병합만 사용한다.

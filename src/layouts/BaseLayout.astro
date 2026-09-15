@@ -16,8 +16,8 @@ const ogType = type === 'Article' ? 'article' : 'website';
     {noindex && <meta name="robots" content="noindex,follow" />}
     <link rel="canonical" href={canonical} /><meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="emfls tech" /><meta property="og:title" content={title} />
-    <meta property="og:description" content={description} /><meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content="summary" /><meta name="twitter:title" content={title} /><meta name="twitter:description" content={description} />
+    <meta property="og:description" content={description} /><meta property="og:url" content={canonical} /><meta property="og:image" content="https://tech.emfls.com/og-image.png" />
+    <meta name="twitter:card" content="summary_large_image" /><meta name="twitter:title" content={title} /><meta name="twitter:description" content={description} /><meta name="twitter:image" content="https://tech.emfls.com/og-image.png" />
     <link rel="icon" href="/favicon.svg" /><meta name="theme-color" content="#15243a" />
     {import.meta.env.PROD && <><script async src={`https://www.googletagmanager.com/gtag/js?id=${ga4MeasurementId}`}></script><script is:inline define:vars={{ ga4MeasurementId }}>window.dataLayer = window.dataLayer || []; function gtag(){window.dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', ga4MeasurementId);</script></>}
     {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>}
