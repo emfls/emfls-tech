@@ -538,3 +538,5 @@
 - 로컬 브라우저에서 Homepage, Search, Diagnose, 대표 Guide, Category, About의 배경·typography·header·card·diagnostic·footer와 overflow를 확인했다.
 - 이번 복구에서는 sitemap, canonical, GA4, Search, Diagnostic, Guide/Category 콘텐츠, Naver 인증 파일을 변경하지 않았다.
 - 주의: 향후 Baseline 적용 시 `global.css` 전체를 덮어쓰지 말고 기존 디자인 CSS에 접근성 규칙을 병합한다.
+- 복구 commit `0a81325`를 `main`에 push하고 Cloudflare Pages Production에 반영했다.
+- `https://tech.emfls.com/`에서 CSS asset HTTP 200, `:root`·`.hero`·`.skip-link` 스타일 존재, 배경색과 typography 정상, horizontal overflow 없음을 확인했다.
