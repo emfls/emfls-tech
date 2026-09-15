@@ -371,3 +371,11 @@
 - 이후 `main`에 commit/push하고 Cloudflare Pages Production 배포를 진행한다.
 - Homepage, Guide, Search, Diagnose의 live Google tag request와 JS error를 확인한다.
 - GA4 Realtime/DebugView는 현재 property 화면 접근 여부를 확인한 뒤 결과를 추가 기록한다.
+
+### 연결 완료 업데이트
+- 실제 최종 ID는 `G-ZL5RD70NKY`이며, 이전 입력 오타 `G-ZL5RD70NK`는 사용하지 않는다.
+- commit `4f231c1`을 `main`에 push했다.
+- Production cache-busting URL에서 Homepage, Guide, Search, Diagnose 모두 Google tag script와 `G-ZL5RD70NKY`를 확인했다.
+- 실제 브라우저에서 네 페이지 모두 `https://www.google-analytics.com/g/collect` 요청과 `en=page_view`를 확인했고 JS error는 없었다.
+- GA4 Realtime/DebugView property 화면은 현재 접근하지 못해 실제 보고서 반영 여부는 `사용자 확인 필요`다.
+- GA4 implementation = `LIVE`
