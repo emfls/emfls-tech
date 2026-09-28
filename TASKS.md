@@ -42,11 +42,11 @@
 - [x] 도메인·SEO·정책·보안·의존성 audit
 - [x] Cloudflare Pages production deployment 및 custom domain 연결
 - [x] 주요 production endpoint·Search·Diagnostic·custom 404 live QA
-- [ ] robots.txt/sitemap 브라우저 직접 확인 (클라이언트 차단으로 재확인 필요)
-- [ ] 실제 GA4 Measurement ID 설정 후 연결 검토
+- [ ] Production에서 robots.txt/sitemap.xml 본문과 HTTP status 재확인 — 2026-09-29 Chrome 직접 열기가 `ERR_BLOCKED_BY_CLIENT`로 차단되어 미확인
+- [x] 실제 GA4 Measurement ID `G-ZL5RD70NKY` production-only 설정 및 Privacy 반영
 - [ ] 실제 AdSense publisher ID 및 심사 상태 확인
 
 ## P2-4 QA 판정
 - Repository readiness: 준비됨 (정적 build와 산출물 audit 기준)
-- Production readiness: LIVE (주요 페이지·기능 확인, robots/sitemap body와 HTTP status 일부 미확인)
+- Production readiness: LIVE. 2026-09-29 Chrome smoke에서 Home/Search/Diagnostic/Guide/Category/Trust/custom 404가 렌더링됨; robots/sitemap 원문 및 HTTP status는 Chrome client block으로 이번 실행에서 미확인.
 - AdSense review readiness: 사용자 계정·publisher ID 설정 필요

@@ -576,3 +576,13 @@
 - `public/images/tech-diagnostic-hero.png`를 제거하고 동일한 1774×887 비율의 `public/images/tech-diagnostic-hero.webp`로 최적화했다. 약 1.2MB에서 약 35KB로 줄였고 Homepage reference, width/height, alt를 유지했다.
 - `npm run check`: 0 errors, 0 warnings; 기존 정보성 hints 5개. `npm run build`: 성공, 38 pages.
 - 기존 Guide 20, Category 10, Search 20, Diagnostic 16, GA4, sitemap, robots, canonical, Naver verification, AdSense 상태는 변경하지 않았다.
+
+## 2026-09-29 — Operations documentation and fresh Production checkpoint
+
+- 작업은 writable isolated clone `/Users/whitesmile/Documents/emfls-all/emfls-tech`의 `main`에서 시작했다. 시작 commit `bd9ebc2866f08adcce445d1c3873d4d7700b8615`; 시작 working tree는 clean이었다.
+- 코드, 콘텐츠, dependency, deployment configuration은 변경하지 않았다. 운영문서가 현재 구현/Registry와 어긋나던 내용을 정정했다: Tech Diagnostic은 이미 구현된 5-step deterministic navigator이고, GA4 `G-ZL5RD70NKY`는 production-only로 설정되어 있으며, AdSense publisher ID/loader는 미설정이다.
+- `README.md`, `SITE_STRATEGY.md`, `TASKS.md`, `LAUNCH_CHECKLIST.md`를 현재 제품·상태 기준으로 갱신했다. 예전 `REPO_CONNECTION.md`는 “원격 저장소가 비어 있음” 및 이전 로컬 경로를 기록해 제거했고, 검증된 GitHub `emfls/emfls-tech` `main`, production domain, 현재 확인 범위와 제한을 담은 `REPOSITORY_CONNECTION.md`를 추가했다.
+- `npm ci`: PASS (기존 deprecated `tsconfck@3.1.6` 경고 1건). `npm run check`: PASS, 21 files / 0 errors / 0 warnings / 기존 Astro hints 5개. `npm run build`: PASS, 38 static pages. `git diff --check`: PASS.
+- 2026-09-29 Chrome Production smoke에서 Home, Search (`wifi` → Guide 6개), Diagnostic (Internet → repeated disconnection → “No”), 대표 Guide, PC Category, About/Privacy/Contact/Editorial Policy 및 unknown route의 custom 404 콘텐츠가 렌더링됐다. 브라우저 렌더만으로 HTTP status를 추정하지 않았다.
+- 같은 Chrome에서 `/robots.txt`, `/sitemap.xml` 직접 열기는 `net::ERR_BLOCKED_BY_CLIENT`를 반환해 본문과 status를 미확인으로 유지했다. 이번 스냅샷은 일반 desktop viewport 한 장뿐이며 exact 1440/390/320 QA는 수행하지 않았다. 2026-09-15의 responsive/endpoint 결과는 이전 증거로만 취급한다.
+- Search Launch는 Registry의 `NOT_READY`를 유지한다. Google/Naver/Daum/IndexNow 계정 접근·제출을 수행하지 않았고, GA4 `SET`, AdSense `NOT_SET`도 변경하지 않았다. Production, DNS, Cloudflare, GitHub remote에는 쓰기 작업이 없었다.

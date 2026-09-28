@@ -2,14 +2,25 @@
 
 `tech.emfls.com`을 위한 생활 IT 문제 해결 사이트입니다.
 
-## Commands
+## Product
+
+현재 제품은 20개 Troubleshooting Guide, 10개 Category, 정적 검색, rule-based Diagnostic으로 구성됩니다. Search와 Diagnostic은 사용자별 서버 저장 없이 브라우저에서 동작합니다.
+
+## Production and Operations
+
+- Production domain: https://tech.emfls.com/
+- Static build: `npm run build` → `dist/`
+- Production-only GA4 ID in code: `G-ZL5RD70NKY` (`src/data/site.ts`, guarded by `import.meta.env.PROD` in `BaseLayout.astro`)
+- AdSense publisher ID / loader: not configured. Do not infer review approval from the presence of a future task.
+- Search Console, Naver, Daum and IndexNow account states are tracked in the Site Registry; code and public page reachability do not prove ownership or submission.
+
+## Local verification
 
 ```bash
-npm install
+npm ci
+npm run check
 npm run dev
 npm run build
 ```
 
-Astro 정적 출력으로 PC, Mac, 스마트폰, 인터넷, Wi-Fi와 주변기기의 문제를 증상 중심으로 설명합니다. 현재 20개 Guide, 10개 Category, 정적 검색과 rule-based Diagnostic MVP를 제공합니다.
-
-배포 기준은 `npm run build`이며 결과물은 `dist/`에 생성됩니다. 운영 도메인은 `https://tech.emfls.com`입니다.
+Current Production route and browser evidence, plus remaining verification limits, are recorded in `LAUNCH_CHECKLIST.md` and `PROJECT_HISTORY.md`.
