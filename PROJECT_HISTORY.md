@@ -586,3 +586,14 @@
 - 2026-09-29 Chrome Production smoke에서 Home, Search (`wifi` → Guide 6개), Diagnostic (Internet → repeated disconnection → “No”), 대표 Guide, PC Category, About/Privacy/Contact/Editorial Policy 및 unknown route의 custom 404 콘텐츠가 렌더링됐다. 브라우저 렌더만으로 HTTP status를 추정하지 않았다.
 - 같은 Chrome에서 `/robots.txt`, `/sitemap.xml` 직접 열기는 `net::ERR_BLOCKED_BY_CLIENT`를 반환해 본문과 status를 미확인으로 유지했다. 이번 스냅샷은 일반 desktop viewport 한 장뿐이며 exact 1440/390/320 QA는 수행하지 않았다. 2026-09-15의 responsive/endpoint 결과는 이전 증거로만 취급한다.
 - Search Launch는 Registry의 `NOT_READY`를 유지한다. Google/Naver/Daum/IndexNow 계정 접근·제출을 수행하지 않았고, GA4 `SET`, AdSense `NOT_SET`도 변경하지 않았다. Production, DNS, Cloudflare, GitHub remote에는 쓰기 작업이 없었다.
+
+## 2026-09-29 — Foundation/Search Launch Naver verification route
+
+- Scope: Site 6 `emfls-tech` only. The local writable clone's pre-existing documentation checkpoint `06d5a931b367e0246aec887ffd522ca592eeef50` remains preserved as the parent of feature branch `codex/site6-foundation-search`; GitHub `main` remains `bd9ebc2866f08adcce445d1c3873d4d7700b8615`.
+- Production GETs on 2026-09-29 confirmed homepage HTTP 200 and custom-domain canonical; `robots.txt` 200; `sitemap.xml` 200 with one urlset / 37 custom-domain URLs; and random unknown route HTTP 404 with custom 404 content.
+- Search blocker: exact Naver verifier `/naverf25a6a23decbc53256c83fd625d68e88.html` returns HTTP 308 to the extensionless path on both `tech.emfls.com` and immutable Pages deployment `09f484fd.emfls-tech.pages.dev`. The extensionless path returns 200 with the token. Production is unchanged.
+- Reproduced the local 308 with the prior same-path `200` rule in `public/_redirects`. Replaced that ineffective exception with `functions/naverf25a6a23decbc53256c83fd625d68e88.html.js` and a `public/_routes.json` that invokes a Pages Function only at the exact verifier URL; other site paths remain static. The static public verifier asset remains as a fallback.
+- Added `tests/search-foundation.test.mjs`. Test-first red run failed on the missing handler/config; after implementation, `node --test tests/search-foundation.test.mjs` passes 2/2.
+- `npm run check`: PASS, 23 files / 0 errors / 0 warnings / 5 existing Astro hints. `npm run build`: PASS, 38 static pages. Local Pages HTTP/Chrome check: exact `.html` 200, no Location, exact token body; homepage / robots / sitemap 200; 37 sitemap URLs on the custom domain; random path 404. `git diff --check` is rerun after the final docs edits.
+- Registry external states remain Google/Naver/Daum/IndexNow `NOT_SET`; no account login, ownership validation, sitemap submission, IndexNow notification, Production deploy, DNS change, or Cloudflare setting change was made. Search Launch is blocked until the exact route fix is Preview/Production-ready and account-owned steps are independently completed.
+- Branch push, Preview deployment, PR access, and exact route behavior on an immutable Preview URL remain pending.

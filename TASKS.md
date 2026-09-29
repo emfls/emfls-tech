@@ -5,6 +5,7 @@
 - [x] 홈페이지와 공통 레이아웃
 - [x] SEO 기본 구조, sitemap, robots.txt, favicon
 - [x] about / privacy / contact / 404
+- [ ] Production Naver 소유확인 `.html` URL 직접 HTTP 200. 현재 main Production은 308으로 확장자 없는 URL에 이동하며, 정확한 경로의 Pages Function 수정은 Preview 검증 전.
 - [x] 모바일 우선 Tech Support + Editorial 디자인 시스템
 
 ## P1-1 — 콘텐츠 구조와 카테고리
@@ -42,11 +43,11 @@
 - [x] 도메인·SEO·정책·보안·의존성 audit
 - [x] Cloudflare Pages production deployment 및 custom domain 연결
 - [x] 주요 production endpoint·Search·Diagnostic·custom 404 live QA
-- [ ] Production에서 robots.txt/sitemap.xml 본문과 HTTP status 재확인 — 2026-09-29 Chrome 직접 열기가 `ERR_BLOCKED_BY_CLIENT`로 차단되어 미확인
+- [x] Production에서 robots.txt/sitemap.xml 본문과 HTTP status 재확인 — 2026-09-29 read-only GET: 둘 다 200, 단일 sitemap urlset 37개 URL, 모두 canonical custom domain
 - [x] 실제 GA4 Measurement ID `G-ZL5RD70NKY` production-only 설정 및 Privacy 반영
 - [ ] 실제 AdSense publisher ID 및 심사 상태 확인
 
 ## P2-4 QA 판정
 - Repository readiness: 준비됨 (정적 build와 산출물 audit 기준)
-- Production readiness: LIVE. 2026-09-29 Chrome smoke에서 Home/Search/Diagnostic/Guide/Category/Trust/custom 404가 렌더링됨; robots/sitemap 원문 및 HTTP status는 Chrome client block으로 이번 실행에서 미확인.
+- Production readiness: LIVE. 2026-09-29 browser smoke와 raw HTTP 검증에서 Home/Search/Diagnostic/Guide/Category/Trust 렌더링, robots/sitemap 200, 37개 custom-domain sitemap URL, random unknown path 404 확인. 단, Naver exact verification `.html` route는 Production에서 308이며 local feature-branch Function fix의 Preview/Production 적용은 미완료.
 - AdSense review readiness: 사용자 계정·publisher ID 설정 필요
